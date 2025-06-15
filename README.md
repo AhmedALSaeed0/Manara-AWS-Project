@@ -48,4 +48,40 @@ The infrastructure is based on **EC2 instances across multiple Availability Zone
 
 ## 🔗 How the Services Are Linked Together
 
-Here’s ho
+Here’s how all the AWS components interact to build a secure and scalable architecture:
+
+1. **User requests (HTTP/HTTPS)** come through **Route 53** which resolves the domain name and routes traffic to the **Application Load Balancer (ALB)**.
+2. The **ALB**, deployed in public subnets, forwards the traffic to **EC2 instances in the Web Tier** (within private or public subnets), managed by a **Web Auto Scaling Group (ASG)**.
+3. The **Web EC2 instances** may connect to a separate **App Tier** (also managed by another **ASG**) if the application is multi-layered.
+4. Both the **Web** and **App EC2 instances** may connect to the **Amazon RDS** database, which is hosted in **private subnets** across two AZs for high availability.
+5. **CloudWatch** monitors CPU utilization, latency, and other metrics. When thresholds are breached, **Auto Scaling Groups** launch or terminate instances automatically.
+6. **SNS (Simple Notification Service)** sends email or SMS alerts based on CloudWatch alarms.
+7. **IAM Roles** are attached to EC2 instances to grant secure access to services like CloudWatch, S3, or RDS—without using static credentials.
+8. **NAT Gateways** provide internet access to instances in private subnets (for OS/package updates).
+9. **Internet Gateway** allows outbound internet traffic from public subnets.
+
+---
+
+## 🖼️ Solution Architecture Diagram
+
+![AWS diagram](https://github.com/user-attachments/assets/f81e0169-17c5-40fb-b78b-5682429281c8)
+
+This diagram visualizes the complete setup: a multi-tier architecture across 2 Availability Zones, public and private subnets, ALB, ASGs, NAT Gateways, RDS, and monitoring services.
+
+---
+
+## 🧰 Key AWS Services Used
+
+- **Amazon EC2** – Hosts the web and application servers
+- **Application Load Balancer (ALB)** – Balances traffic between EC2 instances
+- **Auto Scaling Group (ASG)** – Automatically adjusts EC2 capacity
+- **Amazon RDS** – Relational database (MySQL/PostgreSQL) in Multi-AZ
+- **IAM** – Secures access between services
+- **Amazon CloudWatch** – Collects and tracks metrics
+- **Amazon SNS** – Sends alerts and notifications
+- **Amazon Route 53** – DNS service to route users to the application
+- **NAT Gateway & Internet Gateway** – Provide controlled internet access to public and private resources
+- **Amazon VPC** – Isolated network with subnets and routing
+
+---
+
