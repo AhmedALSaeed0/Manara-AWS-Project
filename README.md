@@ -32,37 +32,7 @@ This project demonstrates how to deploy a **highly available** and **scalable we
 
 ---
 
-## 🧱 Architecture Summary
-
-The infrastructure is based on **EC2 instances across multiple Availability Zones (AZs)** and includes:
-
-- **EC2 Instances** for the web and application tiers.
-- **Application Load Balancer (ALB)** to distribute HTTP traffic across AZs.
-- **Auto Scaling Groups (ASG)** to automatically increase or decrease EC2 instances based on demand.
-- **Amazon RDS (MySQL/PostgreSQL)** deployed in **Multi-AZ** for fault-tolerant data storage.
-- **IAM Roles** to securely grant permissions to EC2 instances and services.
-- **Amazon CloudWatch & SNS** to monitor system metrics and send notifications.
-- **Amazon Route 53**, **Internet Gateway**, and **NAT Gateway** for DNS resolution and internet access within the VPC.
-
----
-
-## 🔗 How the Services Are Linked Together
-
-Here’s how all the AWS components interact to build a secure and scalable architecture:
-
-1. **User requests (HTTP/HTTPS)** come through **Route 53** which resolves the domain name and routes traffic to the **Application Load Balancer (ALB)**.
-2. The **ALB**, deployed in public subnets, forwards the traffic to **EC2 instances in the Web Tier** (within private or public subnets), managed by a **Web Auto Scaling Group (ASG)**.
-3. The **Web EC2 instances** may connect to a separate **App Tier** (also managed by another **ASG**) if the application is multi-layered.
-4. Both the **Web** and **App EC2 instances** may connect to the **Amazon RDS** database, which is hosted in **private subnets** across two AZs for high availability.
-5. **CloudWatch** monitors CPU utilization, latency, and other metrics. When thresholds are breached, **Auto Scaling Groups** launch or terminate instances automatically.
-6. **SNS (Simple Notification Service)** sends email or SMS alerts based on CloudWatch alarms.
-7. **IAM Roles** are attached to EC2 instances to grant secure access to services like CloudWatch, S3, or RDS—without using static credentials.
-8. **NAT Gateways** provide internet access to instances in private subnets (for OS/package updates).
-9. **Internet Gateway** allows outbound internet traffic from public subnets.
-
----
-
-## 🖼️ Solution Architecture Diagram
+## Solution Architecture Diagram
 
 ![AWS diagram](https://github.com/user-attachments/assets/46393df8-bc9a-4eba-a054-5ace548ddd85)
 
@@ -70,7 +40,7 @@ This diagram visualizes the complete setup: a multi-tier architecture across 2 A
 
 ---
 
-## 🧰 Key AWS Services Used
+## AWS Services Used
 
 - **Amazon EC2** – Hosts the web and application servers
 - **Application Load Balancer (ALB)** – Balances traffic between EC2 instances
@@ -82,6 +52,8 @@ This diagram visualizes the complete setup: a multi-tier architecture across 2 A
 - **Amazon Route 53** – DNS service to route users to the application
 - **NAT Gateway & Internet Gateway** – Provide controlled internet access to public and private resources
 - **Amazon VPC** – Isolated network with subnets and routing
+- **Security Groups** – Virtual firewalls controlling inbound and outbound traffic for EC2, RDS, and ALB
+- **Route Tables** – Define how traffic is routed between subnets, NAT Gateways, and Internet Gateways
 
 ---
 
