@@ -64,7 +64,7 @@ Here’s how all the AWS components interact to build a secure and scalable arch
 
 ## 🖼️ Solution Architecture Diagram
 
-![AWS diagram](https://github.com/user-attachments/assets/f81e0169-17c5-40fb-b78b-5682429281c8)
+![AWS diagram](https://github.com/user-attachments/assets/46393df8-bc9a-4eba-a054-5ace548ddd85)
 
 This diagram visualizes the complete setup: a multi-tier architecture across 2 Availability Zones, public and private subnets, ALB, ASGs, NAT Gateways, RDS, and monitoring services.
 
