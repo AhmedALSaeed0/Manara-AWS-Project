@@ -1,9 +1,9 @@
-# 🏗️ Manara-AWS-Project  
-## 🚀 Scalable Web Application with ALB and Auto Scaling (Manara AWS Graduation Project)
+# Manara-AWS-Project  
+## Scalable Web Application with ALB and Auto Scaling (Manara AWS Graduation Project)
 
 ---
 
-## 🧾 Project Requirements (from Manara Guidelines)
+## Project Requirements (from Manara Guidelines)
 
 > ### Project 1: Scalable Web Application with ALB and Auto Scaling  
 > **Architecture:** EC2-based  
@@ -26,7 +26,7 @@
 
 ---
 
-## 📌 Project Overview
+## Project Overview
 
 This project demonstrates how to deploy a **highly available** and **scalable web application** on AWS using key infrastructure components such as **EC2**, **Application Load Balancer (ALB)**, and **Auto Scaling Groups (ASG)**. It follows AWS best practices to ensure performance, reliability, security, and cost-efficiency.
 
