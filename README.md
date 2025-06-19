@@ -80,7 +80,7 @@ This diagram visualizes the complete setup: a multi-tier architecture across 2 A
 - Launch EC2 Instances:
   - Web Layer in Public Subnets (for static content or load testing)
   - Application Layer in Private Subnets behind ALB  
-- Attach proper **IAM Roles** for EC2 access to S3, CloudWatch, etc.
+- Attach proper **IAM Roles** for EC2 access to CloudWatch.
 
 #### 5. **Application Load Balancer**
 - Configure ALB across 2 AZs  
@@ -98,7 +98,7 @@ This diagram visualizes the complete setup: a multi-tier architecture across 2 A
 
 #### 8. **Monitoring & Alerts**
 - Enable CloudWatch metrics and logs for EC2, ALB, and RDS  
-- Create CloudWatch alarms (e.g., CPU > 80%)  
+- Create CloudWatch alarms ( CPU > 80%)  
 - Set up SNS topics to send email alerts to administrators
 
 #### 9. **DNS Setup with Route 53**
