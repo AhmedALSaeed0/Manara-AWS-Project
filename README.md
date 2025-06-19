@@ -57,3 +57,51 @@ This diagram visualizes the complete setup: a multi-tier architecture across 2 A
 
 ---
 
+### Deployment Setup
+
+#### 1. **VPC & Subnets**
+- Create a custom VPC with CIDR (e.g., `172.16.0.0/16`)
+- Create 2 public subnets and 4 private subnets across **2 Availability Zones**
+
+#### 2. **Internet & NAT Gateways**
+- Attach an **Internet Gateway** to the VPC  
+- Add **1 NAT Gateway per AZ** in public subnets  
+- Update route tables to allow:
+  - Public subnets → Internet Gateway
+  - Private subnets → NAT Gateway  
+
+#### 3. **Security Groups**
+- Create:
+  - `WEB Security Group`: Allow HTTP/HTTPS from ALB  
+  - `APP Security Group`: Allow traffic from WEB SG  
+  - `DB Security Group`: Allow traffic from APP SG  
+
+#### 4. **EC2 Instances**
+- Launch EC2 Instances:
+  - Web Layer in Public Subnets (for static content or load testing)
+  - Application Layer in Private Subnets behind ALB  
+- Attach proper **IAM Roles** for EC2 access to S3, CloudWatch, etc.
+
+#### 5. **Application Load Balancer**
+- Configure ALB across 2 AZs  
+- Register web EC2 instances with ALB target group  
+- ALB forwards traffic to instances via listeners (HTTP/HTTPS)
+
+#### 6. **Auto Scaling Group (ASG)**
+- Create launch template/launch configuration  
+- Define scaling policies (based on CPU utilization or target tracking)  
+- Distribute instances across AZs for fault tolerance  
+
+#### 7. **Amazon RDS**
+- Deploy RDS (MySQL/PostgreSQL) in **Multi-AZ** with private subnet group  
+- Connect RDS to EC2 app instances using DB Security Group  
+
+#### 8. **Monitoring & Alerts**
+- Enable CloudWatch metrics and logs for EC2, ALB, and RDS  
+- Create CloudWatch alarms (e.g., CPU > 80%)  
+- Set up SNS topics to send email alerts to administrators
+
+#### 9. **DNS Setup with Route 53**
+- Create a hosted zone  
+- Point domain or subdomain to the ALB DNS name
+
